@@ -1,0 +1,14 @@
+= NestJS WebSocket Server (TypeScript)
+:toc:
+
+== Installation
+
+[source,bash]
+----
+# upgrade nestjs dependences
+npm i @nestjs/common@^10
+
+# install dependencies
+npm i --save @nestjs/websockets @nestjs/platform-socket.io
+
+----
