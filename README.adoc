@@ -10,5 +10,7 @@ npm i @nestjs/common@^10
 
 # install dependencies
 npm i --save @nestjs/websockets @nestjs/platform-socket.io
+npm i @nestjs/event-emitter
+
 
 ----
