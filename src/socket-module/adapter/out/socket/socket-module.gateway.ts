@@ -27,6 +27,7 @@ export class SocketModuleGateway
 
     this.logger.log(`Client id: ${client.id} connected`);
     this.logger.debug(`Number of connected clients: ${sockets.size}`);
+    this.logger.debug(`args: ${args}`);
   }
 
   handleDisconnect(client: any) {
