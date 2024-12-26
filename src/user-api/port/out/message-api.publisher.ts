@@ -1,4 +1,4 @@
-import { log } from 'console';
+import { Logger } from '@nestjs/common';
 import { User } from '../../domain/model/user';
 
 export abstract class MessagePublisher {
@@ -6,8 +6,9 @@ export abstract class MessagePublisher {
 }
 
 export class MessagePublisherMock implements MessagePublisher {
+  logger = new Logger(MessagePublisherMock.name);
+
   userCreated(user: User): void {
-    log(user);
-    console.log('user created');
+    this.logger.debug('user created event for user: ', user);
   }
 }

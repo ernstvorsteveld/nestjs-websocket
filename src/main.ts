@@ -9,10 +9,7 @@ async function bootstrap() {
   const config = app.get(ConfigService);
   await app.listen(config.get(`port`));
 
-  const logger = new Logger();
-  logger.debug(
-    `This application is runnning on: ${await app.getUrl()}`,
-    'Bootstrap',
-  );
+  const logger = new Logger(`Bootstrap`);
+  logger.debug(`This application is runnning on: ${await app.getUrl()}`);
 }
 bootstrap();

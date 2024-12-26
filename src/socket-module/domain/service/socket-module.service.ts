@@ -7,9 +7,9 @@ import { EventUseCases } from '../../port/in/socket-module.usecases';
 export class SocketModuleService implements EventUseCases {
   constructor(private readonly gateway: SocketModuleGateway) {}
 
-  private readonly logger = new Logger(SocketModuleGateway.name);
+  private readonly logger = new Logger(SocketModuleService.name);
 
-  create(user: User): Promise<void> {
+  public create(user: User): Promise<void> {
     this.logger.debug(`Creating user: ${user.userId} (${user.username})`);
     return this.gateway.emitUserCreated(user);
   }

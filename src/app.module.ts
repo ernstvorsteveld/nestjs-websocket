@@ -3,15 +3,17 @@ import { ConfigModule } from '@nestjs/config';
 import { SocketModule } from './socket-module/socket-module.module';
 import { UserApiModule } from './user-api/user-api.module';
 import config from './config/configuration';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
-    UserApiModule,
-    SocketModule,
     ConfigModule.forRoot({
       envFilePath: ['.env.development.local', '.env.development'],
       load: [config],
     }),
+    EventEmitterModule.forRoot(),
+    UserApiModule,
+    SocketModule,
   ],
   providers: [],
 })
