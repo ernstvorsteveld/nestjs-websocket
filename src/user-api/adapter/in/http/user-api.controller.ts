@@ -1,4 +1,4 @@
-import { Controller, Injectable, Post } from '@nestjs/common';
+import { Body, Controller, Injectable, Logger, Post } from '@nestjs/common';
 import { User } from '../../../domain/model/user';
 import { UserApiUseCases } from '../../../port/in/user-api.usecases';
 
@@ -23,13 +23,16 @@ export class UserConverterImpl implements UserConverter {
 
 @Controller('user-api')
 export class UserApiController {
+  private logger = new Logger(UserApiController.name);
+
   constructor(
     private readonly userConverter: UserConverter,
     private readonly userApiUseCases: UserApiUseCases,
   ) {}
 
   @Post()
-  create(user: UserPayload): Promise<void> {
+  create(@Body() user: UserPayload): Promise<void> {
+    this.logger.debug(`Creating user with id ${user.id} and name ${user.name}`);
     return this.userApiUseCases.create(this.userConverter.toDomain(user));
   }
 }

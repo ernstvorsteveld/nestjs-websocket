@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import {
   UserApiController,
   UserConverter,
@@ -10,6 +11,7 @@ import { UserApiUseCases } from './port/in/user-api.usecases';
 import { MessagePublisher } from './port/out/message-api.publisher';
 
 @Module({
+  imports: [EventEmitterModule.forRoot()],
   controllers: [UserApiController],
   providers: [
     {

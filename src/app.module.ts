@@ -1,14 +1,18 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UserApiModule } from './user-api/user-api.module';
-import { EventEmitterModule } from '@nestjs/event-emitter';
+import { ConfigModule } from '@nestjs/config';
 import { SocketModule } from './socket-module/socket-module.module';
-import { SocketModuleGateway } from './socket-module/adapter/out/socket/socket-module.gateway';
+import { UserApiModule } from './user-api/user-api.module';
+import config from './config/configuration';
 
 @Module({
-  imports: [UserApiModule, EventEmitterModule.forRoot(), SocketModule],
-  controllers: [AppController],
-  providers: [AppService, SocketModuleGateway],
+  imports: [
+    UserApiModule,
+    SocketModule,
+    ConfigModule.forRoot({
+      envFilePath: ['.env.development.local', '.env.development'],
+      load: [config],
+    }),
+  ],
+  providers: [],
 })
 export class AppModule {}

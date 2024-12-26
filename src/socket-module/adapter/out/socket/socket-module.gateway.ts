@@ -8,13 +8,11 @@ import {
 } from '@nestjs/websockets';
 import { Server } from 'socket.io';
 import { User } from '../../../domain/model/socket-module.user';
-import { EventUseCases } from '../../../port/in/socket-module.usecases';
 
 @WebSocketGateway()
 export class SocketModuleGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
-  constructor(private readonly useCases: EventUseCases) {}
   private readonly logger = new Logger(SocketModuleGateway.name);
   @WebSocketServer() io: Server;
 
