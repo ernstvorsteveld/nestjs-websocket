@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
+import { SocketModuleService } from '../../../domain/service/socket-module.service';
 import { User } from '../../../domain/model/socket-module.user';
 import { EventUseCases } from '../../../port/in/socket-module.usecases';
 
@@ -35,6 +36,7 @@ export class UserCreatedListener {
   handleUserCreatedEvent(event: UserCreatedEvent) {
     this.logger.debug(`User created: ${event.userId} (${event.username})`);
     const user = this.converter.toUser(event);
+    this.logger.debug(typeof this.useCase);
     this.useCase.create(user);
   }
 }

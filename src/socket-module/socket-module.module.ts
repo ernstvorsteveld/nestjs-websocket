@@ -10,12 +10,11 @@ import { EventUseCases } from './port/in/socket-module.usecases';
 @Module({
   providers: [
     SocketModuleGateway,
-    SocketModuleService,
     UserCreatedListener,
     UserConverter,
     {
       provide: EventUseCases,
-      useValue: SocketModuleService,
+      useClass: SocketModuleService,
     },
   ],
 })
