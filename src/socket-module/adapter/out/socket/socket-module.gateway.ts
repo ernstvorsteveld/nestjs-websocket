@@ -1,43 +1,33 @@
-import { Logger } from '@nestjs/common';
 import {
   OnGatewayConnection,
   OnGatewayDisconnect,
   OnGatewayInit,
   WebSocketGateway,
-  WebSocketServer,
 } from '@nestjs/websockets';
-import { Server } from 'socket.io';
+import { Socket } from 'socket.io-client';
 import { User } from '../../../domain/model/socket-module.user';
+import { SocketService } from './socket-module.socket-service';
 
 @WebSocketGateway()
 export class SocketModuleGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
-  private readonly logger = new Logger(SocketModuleGateway.name);
-  @WebSocketServer() io: Server;
+  constructor(private readonly socketService: SocketService) {}
 
   afterInit() {
-    this.logger.log('Initialized');
+    this.socketService.afterInit();
   }
 
-  handleConnection(client: any, ...args: any[]) {
-    const { sockets } = this.io.sockets;
-
-    this.logger.log(`Client id: ${client.id} connected`);
-    this.logger.debug(`Number of connected clients: ${sockets.size}`);
-    this.logger.debug(`args: ${args}`);
+  handleConnection(socket: Socket): void {
+    this.socketService.handleConnection(socket);
   }
 
-  handleDisconnect(client: any) {
-    this.logger.log(`Cliend id:${client.id} disconnected`);
+  handleDisconnect(client: any): void {
+    this.socketService.handleDisconnect(client);
   }
 
   emitUserCreated(user: User): Promise<void> {
-    this.emit('user.created', user);
+    this.socketService.emitEvent('user.created', user);
     return Promise.resolve();
-  }
-
-  emit(event: string, data: any) {
-    this.io.emit(event, data);
   }
 }

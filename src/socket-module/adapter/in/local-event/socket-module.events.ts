@@ -1,6 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { SocketModuleService } from '../../../domain/service/socket-module.service';
 import { User } from '../../../domain/model/socket-module.user';
 import { EventUseCases } from '../../../port/in/socket-module.usecases';
 

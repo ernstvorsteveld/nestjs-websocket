@@ -10,6 +10,8 @@ async function bootstrap() {
   await app.listen(config.get(`port`));
 
   const logger = new Logger(`Bootstrap`);
-  logger.debug(`This application is runnning on: ${await app.getUrl()}`);
+  logger.debug(`This application is runnning on: ${await app.getUrl()}\n\n`);
+
+  app.enableShutdownHooks();
 }
 bootstrap();
