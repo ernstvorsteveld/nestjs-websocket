@@ -10,7 +10,7 @@ import { User } from '../../../domain/model/socket-module.user';
 import { Server } from 'socket.io';
 import { WebSocketServer } from '@nestjs/websockets';
 
-@WebSocketGateway()
+@WebSocketGateway(3011, { cors: { origin: '*' } })
 export class SocketModuleGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
@@ -41,10 +41,10 @@ export class SocketModuleGateway
   }
 
   emitUserCreated(user: User): Promise<void> {
-    // this.logger.debug(`About to emit: ${JSON.stringify(user)}`);
-    // this.socketService.emitEvent('user.created', user);
     this.logger.debug(`About to emit: ${JSON.stringify(user)}`);
-    this.server.emit('user.created', user);
+    this.connectedClients.forEach((c) => {
+      c.emit('user.created', user);
+    });
     return Promise.resolve();
   }
 }
